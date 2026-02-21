@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0d0a0b;
+            --bg-secondary: #1a1517;
+            --fg-primary: #f5f0eb;
+            --fg-secondary: #c9bfb5;
+            --accent-gold: #d4a574;
+            --accent-wine: #722f37;
+            --accent-rose: #a85a5a;
+            --card-bg: rgba(26, 21, 23, 0.8);
+            --border-color: rgba(212, 165, 116, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg-primary);
+            color: var(--fg-primary);
+            overflow-x: hidden;
+        }
+
+        .font-display {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-gold);
+            border-radius: 3px;
+        }
+
+        /* Petal Canvas */
+        #petal-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(114, 47, 55, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(212, 165, 116, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(168, 90, 90, 0.08) 0%, transparent 60%);
+        }
+
+        .hero-ornament {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            animation: rotate-slow 60s linear infinite;
+        }
+
+        .hero-ornament::before {
+            content: '';
+            position: absolute;
+            inset: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+        }
+
+        @keyframes rotate-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Animated Title */
+        .title-line {
+            overflow: hidden;
+        }
+
+        .title-line span {
+            display: inline-block;
+            transform: translateY(100%);
+            animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); }
+        }
+
+        .couple-name {
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            line-height: 1.1;
+            color: var(--fg-primary);
+            text-shadow: 0 0 60px rgba(212, 165, 116, 0.3);
+        }
+
+        .ampersand {
+            font-size: clamp(2rem, 6vw, 4rem);
+            color: var(--accent-gold);
+            margin: 0.5rem 0;
+            font-style: italic;
+        }
+
+        .date-text {
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            letter-spacing: 0.3em;
+            color: var(--accent-gold);
+            margin-top: 2rem;
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            animation: fadeInUp 1s ease 2s both;
+        }
+
+        .scroll-indicator span {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: var(--fg-secondary);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--accent-gold), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; height: 60px; }
+            50% { opacity: 1; height: 80px; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        /* Section Styles */
+        .section {
+            position: relative;
+            padding: 6rem 1.5rem;
+            z-index: 2;
+        }
+
+        .section-divider {
+            width: 100%;
+            height: 200px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 200'%3E%3Cpath fill='%23d4a574' fill-opacity='0.1' d='M0,100 C300,150 600,50 900,100 C1050,130 1150,80 1200,100 L1200,200 L0,200 Z'/%3E%3C/svg%3E") center/cover no-repeat;
+        }
+
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* Couple Section */
+        .couple-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .couple-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+        }
+
+        .couple-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-gold);
+            margin: 0 auto 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .couple-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .couple-photo::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            background: linear-gradient(45deg, var(--accent-gold), transparent, var(--accent-rose)) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        .couple-name-text {
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+        }
+
+        .couple-parents {
+            font-size: 0.85rem;
+            color: var(--fg-secondary);
+            line-height: 1.8;
+        }
+
+        /* Event Card */
+        .event-card {
+            background: linear-gradient(135deg, rgba(114, 47, 55, 0.2), rgba(26, 21, 23, 0.9));
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--accent-gold);
+            border-radius: 0 0 3px 3px;
+        }
+
+        .event-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(212, 165, 116, 0.1);
+            border-radius: 50%;
+            color: var(--accent-gold);
+        }
+
+        .event-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-gold);
+        }
+
+        .event-detail {
+            font-size: 0.95rem;
+            color: var(--fg-secondary);
+            line-height: 1.8;
+        }
+
+        /* Countdown */
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .countdown-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            min-width: 90px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .countdown-item:hover {
+            transform: scale(1.05);
+        }
+
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--accent-gold);
+            line-height: 1;
+        }
+
+        .countdown-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            color: var(--fg-secondary);
+            margin-top: 0.5rem;
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            aspect-ratio: 4/3;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(13, 10, 11, 0.8), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        /* RSVP Form */
+        .rsvp-form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            color: var(--fg-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: rgba(26, 21, 23, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--fg-primary);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--fg-secondary);
+            opacity: 0.5;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .radio-label:has(input:checked) {
+            border-color: var(--accent-gold);
+            background: rgba(212, 165, 116, 0.1);
+        }
+
+        .radio-label input {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 1px solid var(--accent-gold);
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .radio-label input:checked::after {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--accent-wine), var(--accent-rose));
+            color: var(--fg-primary);
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-wine));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(114, 47, 55, 0.4);
+        }
+
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+
+        .btn-primary span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Gift Section */
+        .gift-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .bank-info {
+            background: rgba(212, 165, 116, 0.05);
+            border: 1px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-gold);
+            color: var(--bg-primary);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 4rem 1.5rem;
+            text-align: center;
+            background: linear-gradient(to top, rgba(114, 47, 55, 0.1), transparent);
+        }
+
+        .footer-quote {
+            font-size: 1.25rem;
+            font-style: italic;
+            color: var(--fg-secondary);
+            max-width: 500px;
+            margin: 0 auto 1rem;
+        }
+
+        /* Floating Hearts */
+        .floating-hearts {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            opacity: 0;
+            animation: floatHeart 6s ease-in-out infinite;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) scale(0);
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(1);
+            }
+        }
+
+        /* Music Toggle */
+        .music-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .music-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 20px;
+        }
+
+        .music-bar {
+            width: 3px;
+            background: var(--accent-gold);
+            border-radius: 2px;
+            transition: height 0.2s ease;
+        }
+
+        .music-toggle.playing .music-bar:nth-child(1) { animation: musicPulse 0.5s ease infinite; }
+        .music-toggle.playing .music-bar:nth-child(2) { animation: musicPulse 0.5s ease 0.1s infinite; }
+        .music-toggle.playing .music-bar:nth-child(3) { animation: musicPulse 0.5s ease 0.2s infinite; }
+
+        @keyframes musicPulse {
+            0%, 100% { height: 8px; }
+            50% { height: 20px; }
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            padding: 1rem;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 12px;
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.4s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            background: var(--card-bg);
+            border: none;
+            border-radius: 50%;
+            color: var(--fg-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Petal Canvas -->
+    <canvas id="petal-canvas"></canvas>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-bg"></div>
+        
+        <!-- Ornamental Circles -->
+        <div class="hero-ornament" style="opacity: 0.3;"></div>
+        <div class="hero-ornament" style="width: 500px; height: 500px; opacity: 0.2; animation-direction: reverse;"></div>
+        
+        <div class="hero-content">
+            <p class="text-sm tracking-[0.3em] text-[var(--accent-gold)] mb-4 title-line">
+                <span style="animation-delay: 0.2s;">THE WEDDING OF</span>
+            </p>
+            
+            <h1 class="font-display couple-name title-line">
+                <span style="animation-delay: 0.4s;">Arya</span>
+            </h1>
+            <p class="font-display ampersand title-line">
+                <span style="animation-delay: 0.6s;">&</span>
+            </p>
+            <h1 class="font-display couple-name title-line">
+                <span style="animation-delay: 0.8s;">Putri</span>
+            </h1>
+            
+            <p class="date-text title-line">
+                <span style="animation-delay: 1s;">14 . 02 . 2025</span>
+            </p>
+            
+            <p class="mt-6 text-[var(--fg-secondary)] max-w-md mx-auto title-line">
+                <span style="animation-delay: 1.2s;">Kepada Yth.<br>Bapak/Ibu/Saudara/i</span>
+            </p>
+            <p class="text-[var(--accent-gold)] mt-2 title-line" id="guest-name">
+                <span style="animation-delay: 1.4s;">Tamu Undangan</span>
+            </p>
+        </div>
+        
+        <div class="scroll-indicator">
+            <span>SCROLL</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Couple Section -->
+    <section class="section">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12 reveal">
+                <p class="text-[var(--accent-gold)] tracking-[0.2em] text-sm mb-2">BRIDE & GROOM</p>
+                <h2 class="font-display text-4xl md:text-5xl font-light">Calon Pengantin</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Groom -->
+                <div class="couple-card reveal reveal-delay-1">
+                    <div class="couple-photo">
+                        <svg viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="180" height="180" fill="#1a1517"/>
+                            <circle cx="90" cy="70" r="40" fill="#2a2527"/>
+                            <ellipse cx="90" cy="160" rx="60" ry="50" fill="#2a2527"/>
+                            <circle cx="90" cy="70" r="35" fill="#d4a574" opacity="0.3"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display couple-name-text">Arya Kusuma</h3>
+                    <p class="text-[var(--accent-gold)] text-sm mb-3">Putra Pertama</p>
+                    <p class="couple-parents">
+                        Bapak Dharma Kusuma<br>
+                        Ibu Ratih Kusuma
+                    </p>
+                    <div class="flex justify-center gap-4 mt-4">
+                        <a href="#" class="w-10 h-10 rounded-full border border-[var(--border-color)] flex items-center justify-center text-[var(--accent-gold)] hover:bg-[var(--accent-gold)] hover:text-[var(--bg-primary)] transition-all">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full border border-[var(--border-color)] flex items-center justify-center text-[var(--accent-gold)] hover:bg-[var(--accent-gold)] hover:text-[var(--bg-primary)] transition-all">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Bride -->
+                <div class="couple-card reveal reveal-delay-2">
+                    <div class="couple-photo">
+                        <svg viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="180" height="180" fill="#1a1517"/>
+                            <circle cx="90" cy="70" r="40" fill="#2a2527"/>
+                            <ellipse cx="90" cy="160" rx="60" ry="50" fill="#2a2527"/>
+                            <circle cx="90" cy="70" r="35" fill="#a85a5a" opacity="0.3"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display couple-name-text">Putri Ayu</h3>
+                    <p class="text-[var(--accent-gold)] text-sm mb-3">Putri Kedua</p>
+                    <p class="couple-parents">
+                        Bapak Wijaya Ayu<br>
+                        Ibu Sari Ayu
+                    </p>
+                    <div class="flex justify-center gap-4 mt-4">
+                        <a href="#" class="w-10 h-10 rounded-full border border-[var(--border-color)] flex items-center justify-center text-[var(--accent-gold)] hover:bg-[var(--accent-gold)] hover:text-[var(--bg-primary)] transition-all">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full border border-[var(--border-color)] flex items-center justify-center text-[var(--accent-gold)] hover:bg-[var(--accent-gold)] hover:text-[var(--bg-primary)] transition-all">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Countdown Section -->
+    <section class="section bg-gradient-to-b from-transparent via-[rgba(114,47,55,0.05)] to-transparent">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="reveal">
+                <p class="text-[var(--accent-gold)] tracking-[0.2em] text-sm mb-2">COUNTDOWN</p>
+                <h2 class="font-display text-4xl md:text-5xl font-light mb-8">Menuju Hari Bahagia</h2>
+            </div>
+            
+            <div class="countdown-container reveal reveal-delay-1">
+                <div class="countdown-item">
+                    <div class="countdown-number font-display" id="days">00</div>
+                    <div class="countdown-label">HARI</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number font-display" id="hours">00</div>
+                    <div class="countdown-label">JAM</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number font-display" id="minutes">00</div>
+                    <div class="countdown-label">MENIT</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number font-display" id="seconds">00</div>
+                    <div class="countdown-label">DETIK</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Section -->
+    <section class="section">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12 reveal">
+                <p class="text-[var(--accent-gold)] tracking-[0.2em] text-sm mb-2">EVENT</p>
+                <h2 class="font-display text-4xl md:text-5xl font-light">Waktu & Tempat</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Akad Nikah -->
+                <div class="event-card reveal reveal-delay-1">
+                    <div class="event-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display event-title">Akad Nikah</h3>
+                    <div class="event-detail">
+                        <p class="text-[var(--fg-primary)] font-medium">Jumat, 14 Februari 2025</p>
+                        <p>Pukul 08:00 - 10:00 WIB</p>
+                        <p class="mt-3 text-[var(--accent-gold)]">Masjid Agung Al-Azhar</p>
+                        <p>Jl. Sisingamangaraja No. 1, Jakarta Selatan</p>
+                    </div>
+                    <a href="#" class="inline-flex items-center gap-2 mt-6 text-sm text-[var(--accent-gold)] hover:underline">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        Lihat Lokasi
+                    </a>
+                </div>
+                
+                <!-- Resepsi -->
+                <div class="event-card reveal reveal-delay-2">
+                    <div class="event-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display event-title">Resepsi</h3>
+                    <div class="event-detail">
+                        <p class="text-[var(--fg-primary)] font-medium">Jumat, 14 Februari 2025</p>
+                        <p>Pukul 11:00 - 14:00 WIB</p>
+                        <p class="mt-3 text-[var(--accent-gold)]">The Ritz-Carlton Jakarta</p>
+                        <p>Jl. DR. Ide Anak Agung Gde Agung, Jakarta Selatan</p>
+                    </div>
+                    <a href="#" class="inline-flex items-center gap-2 mt-6 text-sm text-[var(--accent-gold)] hover:underline">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        Lihat Lokasi
+                    </a>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8 reveal reveal-delay-3">
+                <a href="#" class="btn-primary">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                    <span>Simpan ke Kalender</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="section">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12 reveal">
+                <p class="text-[var(--accent-gold)] tracking-[0.2em] text-sm mb-2">MOMENTS</p>
+                <h2 class="font-display text-4xl md:text-5xl font-light">Galeri Kami</h2>
+            </div>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item reveal reveal-delay-1" onclick="openModal(0)">
+                    <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="400" height="300" fill="#1a1517"/>
+                        <circle cx="200" cy="120" r="60" fill="#722f37" opacity="0.3"/>
+                        <ellipse cx="200" cy="280" rx="100" ry="80" fill="#722f37" opacity="0.3"/>
+                        <text x="200" y="155" text-anchor="middle" fill="#d4a574" font-family="Cormorant Garamond" font-size="24">Our Story</text>
+                    </svg>
+                    <div class="gallery-overlay">
+                        <p class="text-sm">Pre-wedding Photo</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal reveal-delay-2" onclick="openModal(1)">
+                    <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="400" height="300" fill="#1a1517"/>
+                        <rect x="100" y="80" width="200" height="150" rx="10" fill="#a85a5a" opacity="0.2"/>
+                        <text x="200" y="165" text-anchor="middle" fill="#d4a574" font-family="Cormorant Garamond" font-size="24">Engagement</text>
+                    </svg>
+                    <div class="gallery-overlay">
+                        <p class="text-sm">Lamaran</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal reveal-delay-3" onclick="openModal(2)">
+                    <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="400" height="300" fill="#1a1517"/>
+                        <path d="M200 60 L240 120 L200 180 L160 120 Z" fill="#d4a574" opacity="0.2"/>
+                        <text x="200" y="220" text-anchor="middle" fill="#d4a574" font-family="Cormorant Garamond" font-size="24">Together</text>
+                    </svg>
+                    <div class="gallery-overlay">
+                        <p class="text-sm">Together</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal reveal-delay-4" onclick="openModal(3)">
+                    <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="400" height="300" fill="#1a1517"/>
+                        <circle cx="150" cy="150" r="50" fill="#722f37" opacity="0.3"/>
+                        <circle cx="250" cy="150" r="50" fill="#a85a5a" opacity="0.3"/>
+                        <text x="200" y="230" text-anchor="middle" fill="#d4a574" font-family="Cormorant Garamond" font-size="24">Love</text>
+                    </svg>
+                    <div class="gallery-overlay">
+                        <p class="text-sm">Love Story</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP Section -->
+    <section class="section">
+        <div class="max-w-xl mx-auto">
+            <div class="text-center mb-10 reveal">
+                <p class="text-[var(--accent-gold)] tracking-[0.2em] text-sm mb-2">RSVP</p>
+                <h2 class="font-display text-4xl md:text-5xl font-light">Konfirmasi Kehadiran</h2>
+                <p class="text-[var(--fg-secondary)] mt-4">Mohon konfirmasi kehadiran Anda sebelum 7 Februari 2025</p>
+            </div>
+            
+            <form class="rsvp-form reveal reveal-delay-1" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label class="form-label">NAMA LENGKAP</label>
+                    <input type="text" class="form-input" placeholder="Masukkan nama lengkap" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">KONFIRMASI KEHADIRAN</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="attendance" value="hadir" required>
+                            <span>Hadir</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="attendance" value="tidak">
+                            <span>Tidak Hadir</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">JUMLAH TAMU</label>
+                    <select class="form-input">
+                        <option value="1">1 Orang</option>
+                        <option value="2">2 Orang</option>
+                        <option value="3">3 Orang</option>
+                        <option value="4">4 Orang</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">UCAPAN & DOA</label>
+                    <textarea class="form-input" rows="4" placeholder="Tuliskan ucapan dan doa untuk kedua mempelai"></textarea>
+                </div>
+                
+                <button type="submit" class="btn-primary w-full">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="22" y1="2" x2="11" y2="13"/>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                    </svg>
+                    <span>Kirim Konfirmasi</span>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Gift Section -->
+    <section class="section">
+        <div class="max-w-xl mx-auto">
+            <div class="text-center mb-10 reveal">
+                <p class="text-[var(--accent-gold)] tracking-[0.2em] text-sm mb-2">GIFT</p>
+                <h2 class="font-display text-4xl md:text-5xl font-light">Hadiah Pernikahan</h2>
+                <p class="text-[var(--fg-secondary)] mt-4">Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika Anda ingin memberikan tanda kasih, kami menyediakan opsi berikut.</p>
+            </div>
+            
+            <div class="grid gap-4 reveal reveal-delay-1">
+                <div class="gift-card">
+                    <div class="flex items-center justify-center gap-3 mb-2">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-[var(--accent-gold)]">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                            <line x1="1" y1="10" x2="23" y2="10"/>
+                        </svg>
+                        <span class="font-medium">Bank BCA</span>
+                    </div>
+                    <div class="bank-info">
+                        <p class="text-sm text-[var(--fg-secondary)]">a.n. Arya Kusuma</p>
+                        <p class="text-xl font-display mt-1" id="bank-number">1234 5678 9012</p>
+                        <button class="copy-btn mt-3" onclick="copyToClipboard('1234 5678 9012')">
+                            Salin Nomor Rekening
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="gift-card">
+                    <div class="flex items-center justify-center gap-3 mb-2">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-[var(--accent-gold)]">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                            <line x1="12" y1="22.08" x2="12" y2="12"/>
+                        </svg>
+                        <span class="font-medium">Kirim Hadiah</span>
+                    </div>
+                    <div class="bank-info">
+                        <p class="text-sm text-[var(--fg-secondary)]">Alamat Pengiriman</p>
+                        <p class="mt-1">Jl. Kebahagiaan No. 14, Kelurahan Cinta, Kecamatan Harmoni, Jakarta Selatan 12345</p>
+                        <button class="copy-btn mt-3" onclick="copyToClipboard('Jl. Kebahagiaan No. 14, Kelurahan Cinta, Kecamatan Harmoni, Jakarta Selatan 12345')">
+                            Salin Alamat
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="max-w-2xl mx-auto reveal">
+            <p class="font-display footer-quote">"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan hidup dari jenismu sendiri, supaya kamu merasa tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang."</p>
+            <p class="text-sm text-[var(--fg-secondary)]">QS. Ar-Rum: 21</p>
+            
+            <div class="mt-10 pt-8 border-t border-[var(--border-color)]">
+                <p class="font-display text-3xl text-[var(--accent-gold)] mb-4">Arya & Putri</p>
+                <p class="text-[var(--fg-secondary)] text-sm">Terima kasih atas doa dan restu Anda</p>
+                <p class="text-[var(--fg-secondary)] text-sm mt-2">Kami yang berbahagia</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Music Toggle -->
+    <button class="music-toggle" id="musicToggle" aria-label="Toggle Music">
+        <div class="music-bars">
+            <div class="music-bar" style="height: 8px;"></div>
+            <div class="music-bar" style="height: 14px;"></div>
+            <div class="music-bar" style="height: 8px;"></div>
+        </div>
+    </button>
+
+    <!-- Modal -->
+    <div class="modal" id="galleryModal">
+        <button class="modal-close" onclick="closeModal()" aria-label="Close Modal">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </button>
+        <div class="modal-content" id="modalContent">
+            <!-- Content will be inserted here -->
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" style="position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: var(--accent-gold); color: var(--bg-primary); padding: 0.75rem 1.5rem; border-radius: 8px; font-size: 0.9rem; opacity: 0; transition: opacity 0.3s ease; z-index: 1001;"></div>
+
+    <script>
+        // Initialize variables
+        const petalCanvas = document.getElementById('petal-canvas');
+        const ctx = petalCanvas.getContext('2d');
+        let petals = [];
+        let animationFrameId = null;
+        
+        // Petal class
+        class Petal {
+            constructor() {
+                this.reset();
+            }
+            
+            reset() {
+                this.x = Math.random() * petalCanvas.width;
+                this.y = -20;
+                this.size = Math.max(5, Math.random() * 15 + 5);
+                this.speedY = Math.random() * 1.5 + 0.5;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotationSpeed = Math.random() * 0.02 - 0.01;
+                this.opacity = Math.random() * 0.5 + 0.3;
+                this.swing = Math.random() * Math.PI * 2;
+                this.swingSpeed = Math.random() * 0.02 + 0.01;
+            }
+            
+            update() {
+                this.y += this.speedY;
+                this.swing += this.swingSpeed;
+                this.x += this.speedX + Math.sin(this.swing) * 0.3;
+                this.rotation += this.rotationSpeed;
+                
+                if (this.y > petalCanvas.height + 20) {
+                    this.reset();
+                }
+            }
+            
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.globalAlpha = this.opacity;
+                
+                // Draw petal shape
+                ctx.beginPath();
+                ctx.fillStyle = '#d4a574';
+                ctx.moveTo(0, -this.size / 2);
+                ctx.bezierCurveTo(
+                    this.size / 2, -this.size / 2,
+                    this.size / 2, this.size / 2,
+                    0, this.size / 2
+                );
+                ctx.bezierCurveTo(
+                    -this.size / 2, this.size / 2,
+                    -this.size / 2, -this.size / 2,
+                    0, -this.size / 2
+                );
+                ctx.fill();
+                
+                ctx.restore();
+            }
+        }
+        
+        // Resize canvas
+        function resizeCanvas() {
+            petalCanvas.width = window.innerWidth;
+            petalCanvas.height = window.innerHeight;
+        }
+        
+        // Initialize petals
+        function initPetals() {
+            petals = [];
+            const petalCount = Math.floor(window.innerWidth / 20);
+            for (let i = 0; i < petalCount; i++) {
+                const petal = new Petal();
+                petal.y = Math.random() * petalCanvas.height;
+                petals.push(petal);
+            }
+        }
+        
+        // Animate petals
+        function animatePetals() {
+            ctx.clearRect(0, 0, petalCanvas.width, petalCanvas.height);
+            
+            petals.forEach(petal => {
+                petal.update();
+                petal.draw();
+            });
+            
+            animationFrameId = requestAnimationFrame(animatePetals);
+        }
+        
+        // Initialize canvas
+        resizeCanvas();
+        initPetals();
+        animatePetals();
+        
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initPetals();
+        });
+        
+        // Reduced motion check
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            cancelAnimationFrame(animationFrameId);
+        }
+        
+        // Countdown Timer
+        const weddingDate = new Date('2025-02-14T08:00:00').getTime();
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+            
+            if (distance > 0) {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById('days').textContent = String(days).padStart(2, '0');
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+            }
+        }
+        
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        
+        // Scroll Reveal
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+        
+        revealElements.forEach(el => revealObserver.observe(el));
+        
+        // Music Toggle
+        const musicToggle = document.getElementById('musicToggle');
+        let isPlaying = false;
+        
+        // Create audio context for visual feedback
+        musicToggle.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            musicToggle.classList.toggle('playing', isPlaying);
+            
+            if (isPlaying) {
+                showToast('Musik diputar');
+            } else {
+                showToast('Musik dijeda');
+            }
+        });
+        
+        // Copy to clipboard
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Berhasil disalin!');
+            }).catch(() => {
+                showToast('Gagal menyalin');
+            });
+        }
+        
+        // Toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.opacity = '1';
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+            }, 2000);
+        }
+        
+        // Modal
+        const galleryItems = [
+            '<svg viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="800" height="600" fill="#1a1517"/><circle cx="400" cy="240" r="120" fill="#722f37" opacity="0.3"/><ellipse cx="400" cy="560" rx="200" ry="160" fill="#722f37" opacity="0.3"/><text x="400" y="260" text-anchor="middle" fill="#d4a574" font-family="Cormorant Garamond" font-size="48">Our Story</text></svg>',
+            '<svg viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="800" height="600" fill="#1a1517"/><rect x="200" y="160" width="400" height="300" rx="20" fill="#a85a5a" opacity="0.2"/><text x="400" y="330" text-anchor="middle" fill="#d4a574" font-family="Cormorant Garamond" font-size="48">Engagement</text></svg>',
+            '<svg viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="800" height="600" fill="#1a1517"/><path d="M400 120 L480 240 L400 360 L320 240 Z" fill="#d4a574" opacity="0.2"/><text x="400" y="440" text-anchor="middle" fill="#d4a574" font-family="Cormorant Garamond" font-size="48">Together</text></svg>',
+            '<svg viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="800" height="600" fill="#1a1517"/><circle cx="300" cy="300" r="100" fill="#722f37" opacity="0.3"/><circle cx="500" cy="300" r="100" fill="#a85a5a" opacity="0.3"/><text x="400" y="460" text-anchor="middle" fill="#d4a574" font-family="Cormorant Garamond" font-size="48">Love</text></svg>'
+        ];
+        
+        function openModal(index) {
+            const modal = document.getElementById('galleryModal');
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = galleryItems[index];
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('galleryModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        document.getElementById('galleryModal').addEventListener('click', (e) => {
+            if (e.target.id === 'galleryModal') {
+                closeModal();
+            }
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+        
+        // Form submission
+        function handleSubmit(e) {
+            e.preventDefault();
+            showToast('Terima kasih atas konfirmasinya!');
+            e.target.reset();
+        }
+        
+        // Parallax effect on scroll
+        let lastScrollY = 0;
+        const heroContent = document.querySelector('.hero-content');
+        
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            
+            if (heroContent && scrollY < window.innerHeight) {
+                heroContent.style.transform = `translateY(${scrollY * 0.3}px)`;
+                heroContent.style.opacity = 1 - (scrollY / window.innerHeight);
+            }
+            
+            lastScrollY = scrollY;
+        }, { passive: true });
+        
+        // Mouse follow effect for hero
+        document.querySelector('.hero-section').addEventListener('mousemove', (e) => {
+            const { clientX, clientY } = e;
+            const x = (clientX / window.innerWidth - 0.5) * 20;
+            const y = (clientY / window.innerHeight - 0.5) * 20;
+            
+            document.querySelectorAll('.hero-ornament').forEach((el, i) => {
+                const factor = (i + 1) * 0.5;
+                el.style.transform = `translate(${x * factor}px, ${y * factor}px) rotate(${(Date.now() / 1000) % 360}deg)`;
+            });
+        });
+    </script>
+</body>
+</html>
