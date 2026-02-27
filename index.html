@@ -6,21 +6,15 @@
     <title>Undangan Pernikahan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;500&display=swap" rel="stylesheet">
-    <!-- Tautan ke file CSS terpisah -->
     <link rel="stylesheet" href="style.css">
 </head>
-<!-- GANTI CLASS DI BAWAH INI UNTUK GANTI WARNA (template-1 s/d template-10) -->
 <body class="template-10">
-    
     <audio id="bg-music" loop preload="auto">
         <source src="https://dn721804.ca.archive.org/0/items/payung-teduh-akad-official-music-video-payung-teduh-official/Payung%20Teduh%20-%20Akad%20%28Official%20Music%20Video%29%20-%20Payung%20Teduh%20Official.mp3" type="audio/mpeg">
     </audio>
-
     <button id="music-toggle" class="music-btn" aria-label="Toggle musik"><div class="bar"></div><div class="bar"></div><div class="bar"></div></button>
     <div id="toast" class="toast-top">Berhasil disalin</div>
     <div id="petals-container" aria-hidden="true"></div>
-
-    <!-- Cover -->
     <section id="cover" class="min-h-screen flex items-center justify-center relative overflow-hidden" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22><circle cx=%2220%22 cy=%2220%22 r=%221%22 fill=%22var(--accent)%22 opacity=%220.05%22/></svg>');">
         <div class="absolute inset-0 pointer-events-none">
             <svg class="absolute top-4 left-4 w-20 md:w-28 opacity-25" viewBox="0 0 100 100" fill="none" stroke="var(--accent)" stroke-width="1"><path d="M0 100 Q0 0 100 0"/><circle cx="40" cy="40" r="2" fill="var(--accent)"/></svg>
@@ -39,10 +33,7 @@
             <button id="open-invitation" class="btn-elegant px-10 mt-2 py-4 text-sm tracking-[0.15em] uppercase font-medium text-white" style="background: var(--accent);">Buka Undangan</button>
         </div>
     </section>
-
-    <!-- Main Content -->
     <main id="main-content" class="hidden">
-        <!-- Couple Section -->
         <section class="py-16 md:py-24" style="background: var(--bg-sec);">
             <div class="max-w-4xl mx-auto px-6">
                 <div class="text-center mb-12">
@@ -64,8 +55,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Event Details -->
         <section class="py-16 md:py-24">
             <div class="max-w-4xl mx-auto px-6">
                 <div class="text-center mb-10">
@@ -102,8 +91,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Gallery -->
         <section class="py-16 md:py-24" style="background: var(--bg-sec);">
             <div class="max-w-5xl mx-auto px-6">
                 <div class="text-center mb-10"><h2 class="font-display text-2xl md:text-3xl reveal">Galeri Kami</h2><div class="ornament-line w-20 mx-auto mt-5 reveal reveal-delay-1"></div></div>
@@ -117,8 +104,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Gift -->
         <section class="py-16 md:py-24">
             <div class="max-w-md mx-auto px-6">
                 <div class="text-center mb-8"><h2 class="font-display text-2xl md:text-3xl reveal">Hadiah Pernikahan</h2><div class="ornament-line w-20 mx-auto mt-5 reveal reveal-delay-1"></div><p class="mt-5 reveal reveal-delay-2 text-sm" style="color: var(--muted);">Doa restu Anda merupakan karunia yang sangat berarti.</p></div>
@@ -134,8 +119,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Quote & Closing -->
         <section class="py-16 md:py-24" style="background: var(--bg-sec);">
             <div class="max-w-2xl mx-auto px-6 text-center">
                 <svg class="w-10 h-10 mx-auto mb-6 opacity-25 reveal" style="color: var(--accent);" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
@@ -143,7 +126,6 @@
                 <p class="text-sm tracking-[0.2em] uppercase reveal reveal-delay-2" style="color: var(--accent);">QS. Ar-Rum: 21</p>
             </div>
         </section>
-
         <section class="py-16 md:py-24">
             <div class="max-w-2xl mx-auto px-6 text-center">
                 <p class="mb-5 reveal text-sm" style="color: var(--muted);">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir.</p>
@@ -152,7 +134,6 @@
                 <div class="mt-10 heart-beat reveal reveal-delay-3"><svg class="w-9 h-9 mx-auto" style="color: var(--accent);" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
             </div>
         </section>
-
         <footer class="py-8 text-center" style="background: var(--fg); color: rgba(255,255,255,0.8);">
             <div class="max-w-md mx-auto px-6">
                 <p class="text-xs tracking-[0.12em] uppercase mb-2" style="color: var(--accent);">undangan by LP Tech</p>
@@ -160,8 +141,6 @@
             </div>
         </footer>
     </main>
-
-    <!-- Tautan ke file JS terpisah -->
     <script src="script.js"></script>
 </body>
 </html>
