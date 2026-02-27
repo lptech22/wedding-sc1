@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Tautan ke file CSS terpisah -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<!-- GANTI CLASS DI BAWAH INI UNTUK GANTI WARNA (template-1 s/d template-10) -->
+<body class="template-10">
+    
+    <audio id="bg-music" loop preload="auto">
+        <source src="https://dn721804.ca.archive.org/0/items/payung-teduh-akad-official-music-video-payung-teduh-official/Payung%20Teduh%20-%20Akad%20%28Official%20Music%20Video%29%20-%20Payung%20Teduh%20Official.mp3" type="audio/mpeg">
+    </audio>
+
+    <button id="music-toggle" class="music-btn" aria-label="Toggle musik"><div class="bar"></div><div class="bar"></div><div class="bar"></div></button>
+    <div id="toast" class="toast-top">Berhasil disalin</div>
+    <div id="petals-container" aria-hidden="true"></div>
+
+    <!-- Cover -->
+    <section id="cover" class="min-h-screen flex items-center justify-center relative overflow-hidden" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22><circle cx=%2220%22 cy=%2220%22 r=%221%22 fill=%22var(--accent)%22 opacity=%220.05%22/></svg>');">
+        <div class="absolute inset-0 pointer-events-none">
+            <svg class="absolute top-4 left-4 w-20 md:w-28 opacity-25" viewBox="0 0 100 100" fill="none" stroke="var(--accent)" stroke-width="1"><path d="M0 100 Q0 0 100 0"/><circle cx="40" cy="40" r="2" fill="var(--accent)"/></svg>
+            <svg class="absolute top-4 right-4 w-20 md:w-28 opacity-25" viewBox="0 0 100 100" fill="none" stroke="var(--accent)" stroke-width="1"><path d="M100 100 Q100 0 0 0"/><circle cx="60" cy="40" r="2" fill="var(--accent)"/></svg>
+        </div>
+        <div class="text-center px-6 py-16 relative z-10">
+            <p class="text-sm tracking-[0.25em] uppercase mb-6 reveal" style="color: var(--muted);">The Wedding Of</p>
+            <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-normal mb-4 reveal reveal-delay-1" style="color: var(--accent);">Ahmad & Sarah</h1>
+            <div class="ornament-line w-28 mx-auto my-8 reveal reveal-delay-2"></div>
+            <p class="font-display text-xl md:text-2xl italic mb-12 reveal reveal-delay-3" style="color: var(--muted);">"Two souls, one heart"</p>
+            <p class="text-sm tracking-[0.2em] uppercase mb-3 reveal reveal-delay-4" style="color: var(--muted);">Kepada Yth.</p>
+            <p class="text-lg font-medium mb-10 reveal reveal-delay-4">Bapak/Ibu/Saudara/i</p>
+            <div class="scroll-indicator mt-14 reveal reveal-delay-4">
+                <svg class="w-5 h-5 mx-auto" style="color: var(--accent);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+            </div>
+            <button id="open-invitation" class="btn-elegant px-10 mt-2 py-4 text-sm tracking-[0.15em] uppercase font-medium text-white" style="background: var(--accent);">Buka Undangan</button>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main id="main-content" class="hidden">
+        <!-- Couple Section -->
+        <section class="py-16 md:py-24" style="background: var(--bg-sec);">
+            <div class="max-w-4xl mx-auto px-6">
+                <div class="text-center mb-12">
+                    <p class="text-sm tracking-[0.25em] uppercase mb-4 reveal" style="color: var(--accent);">Bismillahirrahmanirrahim</p>
+                    <h2 class="font-display text-2xl md:text-3xl reveal reveal-delay-1">Assalamu'alaikum Wr. Wb.</h2>
+                    <p class="mt-5 leading-relaxed max-w-2xl mx-auto reveal reveal-delay-2" style="color: var(--muted);">Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri pernikahan kami.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div class="text-center reveal reveal-delay-1">
+                        <div class="photo-frame w-60 md:w-80 mx-auto mb-5 card overflow-hidden"><img src="https://img.freepik.com/vektor-premium/ikon-pria-simbol-logo-vektor_636116-413.jpg" alt="Mempelai Pria" class="w-full h-full object-cover"></div>
+                        <h3 class="font-display text-2xl md:text-3xl mb-2" style="color: var(--accent);">Ahmad Fauzan</h3>
+                        <p style="color: var(--muted);">Putra dari<br>Bpk. H. Sulaiman & Ibu Hj. Aminah</p>
+                    </div>
+                    <div class="text-center reveal reveal-delay-2">
+                        <div class="photo-frame w-60 md:w-80 mx-auto mb-5 card overflow-hidden"><img src="https://static.vecteezy.com/system/resources/previews/007/793/728/non_2x/silhouette-drawing-of-muslim-woman-with-hijab-arab-woman-for-logo-template-icon-hijab-store-muslim-store-etc-free-vector.jpg" alt="Mempelai Wanita" class="w-full h-full object-cover"></div>
+                        <h3 class="font-display text-2xl md:text-3xl mb-2" style="color: var(--accent);">Sarah Putri Amelia</h3>
+                        <p style="color: var(--muted);">Putri dari dari<br>Bpk. H. Abdullah & Ibu Hj. Fatimah</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Details -->
+        <section class="py-16 md:py-24">
+            <div class="max-w-4xl mx-auto px-6">
+                <div class="text-center mb-10">
+                    <h2 class="font-display text-2xl md:text-3xl reveal">Waktu & Tempat</h2>
+                    <div class="ornament-line w-20 mx-auto mt-5 reveal reveal-delay-1"></div>
+                </div>
+                <div class="mb-12">
+                    <p class="text-center text-sm tracking-[0.2em] uppercase mb-6 reveal" style="color: var(--muted);">Menghitung Hari</p>
+                    <div id="countdown" class="flex justify-center gap-3 md:gap-4 flex-wrap">
+                        <div class="countdown-box text-center reveal reveal-delay-1"><span id="days" class="font-display text-3xl md:text-4xl block" style="color: var(--accent);">00</span><span class="text-xs tracking-[0.15em] uppercase" style="color: var(--muted);">Hari</span></div>
+                        <div class="countdown-box text-center reveal reveal-delay-2"><span id="hours" class="font-display text-3xl md:text-4xl block" style="color: var(--accent);">00</span><span class="text-xs tracking-[0.15em] uppercase" style="color: var(--muted);">Jam</span></div>
+                        <div class="countdown-box text-center reveal reveal-delay-3"><span id="minutes" class="font-display text-3xl md:text-4xl block" style="color: var(--accent);">00</span><span class="text-xs tracking-[0.15em] uppercase" style="color: var(--muted);">Menit</span></div>
+                        <div class="countdown-box text-center reveal reveal-delay-4"><span id="seconds" class="font-display text-3xl md:text-4xl block" style="color: var(--accent);">00</span><span class="text-xs tracking-[0.15em] uppercase" style="color: var(--muted);">Detik</span></div>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+                    <div class="card p-6 md:p-8 text-center reveal reveal-delay-1">
+                        <div class="w-14 h-14 mx-auto mb-5 flex items-center justify-center rounded-full" style="background: var(--bg-sec);"><svg class="w-7 h-7" style="color: var(--sage);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+                        <h3 class="font-display text-xl md:text-2xl mb-3" style="color: var(--accent);">Akad Nikah</h3>
+                        <p class="font-medium mb-1">Sabtu, 15 April 2026</p><p class="mb-4" style="color: var(--muted);">Pukul 08:00 - 10:00 WIB</p>
+                        <div class="pt-4" style="border-top: 1px solid var(--border);"><p class="font-medium">Masjid Al-Ikhlas</p><p class="text-sm" style="color: var(--muted);">Jl. Merdeka No. 123, Jakarta Selatan</p></div>
+                    </div>
+                    <div class="card p-6 md:p-8 text-center reveal reveal-delay-2">
+                        <div class="w-14 h-14 mx-auto mb-5 flex items-center justify-center rounded-full" style="background: var(--bg-sec);"><svg class="w-7 h-7" style="color: var(--sage);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18z"/></svg></div>
+                        <h3 class="font-display text-xl md:text-2xl mb-3" style="color: var(--accent);">Resepsi</h3>
+                        <p class="font-medium mb-1">Sabtu, 15 April 2026</p><p class="mb-4" style="color: var(--muted);">Pukul 11:00 - 14:00 WIB</p>
+                        <div class="pt-4" style="border-top: 1px solid var(--border);"><p class="font-medium">Ballroom Hotel Grand</p><p class="text-sm" style="color: var(--muted);">Jl. Sudirman No. 456, Jakarta Pusat</p></div>
+                    </div>
+                </div>
+                <div class="mt-10 reveal reveal-delay-3"><div class="map-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d253840.65295077847!2d106.68943004509056!3d-6.229386912086395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3e945e34b9d%3A0x5371bf0fdad786a2!2sJakarta%2C%20Indonesia!5e0!3m2!1sen!2sus" width="100%" height="280" style="border:0;" allowfullscreen="" loading="lazy"></iframe></div></div>
+                <div class="flex flex-wrap justify-center gap-3 md:gap-4 mt-8 reveal reveal-delay-4">
+                    <a href="https://maps.google.com" target="_blank" rel="noopener" class="btn-elegant inline-flex items-center gap-2 px-5 py-3 text-sm tracking-wide font-medium text-white" style="background: var(--sage);"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Buka Maps</a>
+                    <button id="save-calendar" class="btn-elegant inline-flex items-center gap-2 px-5 py-3 text-sm tracking-wide font-medium text-white" style="background: var(--accent);"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>Simpan Kalender</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery -->
+        <section class="py-16 md:py-24" style="background: var(--bg-sec);">
+            <div class="max-w-5xl mx-auto px-6">
+                <div class="text-center mb-10"><h2 class="font-display text-2xl md:text-3xl reveal">Galeri Kami</h2><div class="ornament-line w-20 mx-auto mt-5 reveal reveal-delay-1"></div></div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
+                    <div class="photo-frame card overflow-hidden reveal reveal-delay-1"><img src="https://img.freepik.com/vektor-premium/ikon-pria-simbol-logo-vektor_636116-413.jpg" alt="Gallery" class="w-full h-full object-cover"></div>
+                    <div class="photo-frame card overflow-hidden reveal reveal-delay-1"><img src="https://static.vecteezy.com/system/resources/previews/007/793/728/non_2x/silhouette-drawing-of-muslim-woman-with-hijab-arab-woman-for-logo-template-icon-hijab-store-muslim-store-etc-free-vector.jpg" alt="Gallery" class="w-full h-full object-cover"></div>
+                    <div class="photo-frame card overflow-hidden reveal reveal-delay-2"><img src="https://img.freepik.com/vektor-premium/ikon-pria-simbol-logo-vektor_636116-413.jpg" alt="Gallery" class="w-full h-full object-cover"></div>
+                    <div class="photo-frame card overflow-hidden reveal reveal-delay-2"><img src="https://static.vecteezy.com/system/resources/previews/007/793/728/non_2x/silhouette-drawing-of-muslim-woman-with-hijab-arab-woman-for-logo-template-icon-hijab-store-muslim-store-etc-free-vector.jpg" alt="Gallery" class="w-full h-full object-cover"></div>
+                    <div class="photo-frame card overflow-hidden reveal reveal-delay-3"><img src="https://img.freepik.com/vektor-premium/ikon-pria-simbol-logo-vektor_636116-413.jpg" alt="Gallery" class="w-full h-full object-cover"></div>
+                    <div class="photo-frame card overflow-hidden reveal reveal-delay-3"><img src="https://static.vecteezy.com/system/resources/previews/007/793/728/non_2x/silhouette-drawing-of-muslim-woman-with-hijab-arab-woman-for-logo-template-icon-hijab-store-muslim-store-etc-free-vector.jpg" alt="Gallery" class="w-full h-full object-cover"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gift -->
+        <section class="py-16 md:py-24">
+            <div class="max-w-md mx-auto px-6">
+                <div class="text-center mb-8"><h2 class="font-display text-2xl md:text-3xl reveal">Hadiah Pernikahan</h2><div class="ornament-line w-20 mx-auto mt-5 reveal reveal-delay-1"></div><p class="mt-5 reveal reveal-delay-2 text-sm" style="color: var(--muted);">Doa restu Anda merupakan karunia yang sangat berarti.</p></div>
+                <div class="card p-6 text-center reveal reveal-delay-1">
+                    <div class="w-14 h-14 mx-auto mb-5 flex items-center justify-center rounded-full" style="background: var(--bg-sec);"><svg class="w-7 h-7" style="color: var(--sage);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg></div>
+                    <p class="text-sm mb-1" style="color: var(--muted);">Bank Central Asia (BCA)</p><p class="font-medium text-lg mb-1">1234567890</p><p class="text-sm mb-5" style="color: var(--muted);">a.n. Ahmad Fauzan</p>
+                    <button class="copy-btn btn-elegant px-6 py-3 text-sm tracking-wide font-medium text-white w-full" style="background: var(--accent);" data-copy="1234567890">Salin Nomor Rekening</button>
+                </div>
+                <div class="card p-6 mt-6 text-center reveal reveal-delay-2">
+                    <div class="w-14 h-14 mx-auto mb-5 flex items-center justify-center rounded-full" style="background: var(--bg-sec);"><svg class="w-7 h-7" style="color: var(--sage);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg></div>
+                    <p class="text-sm mb-1" style="color: var(--muted);">GoPay / OVO</p><p class="font-medium text-lg mb-1">081234567890</p><p class="text-sm mb-5" style="color: var(--muted);">a.n. Ahmad Fauzan</p>
+                    <button class="copy-btn btn-elegant px-6 py-3 text-sm tracking-wide font-medium text-white w-full" style="background: var(--accent);" data-copy="081234567890">Salin Nomor E-Wallet</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quote & Closing -->
+        <section class="py-16 md:py-24" style="background: var(--bg-sec);">
+            <div class="max-w-2xl mx-auto px-6 text-center">
+                <svg class="w-10 h-10 mx-auto mb-6 opacity-25 reveal" style="color: var(--accent);" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                <blockquote class="font-display text-xl md:text-2xl italic leading-relaxed mb-5 reveal reveal-delay-1">"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu istri-istri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya."</blockquote>
+                <p class="text-sm tracking-[0.2em] uppercase reveal reveal-delay-2" style="color: var(--accent);">QS. Ar-Rum: 21</p>
+            </div>
+        </section>
+
+        <section class="py-16 md:py-24">
+            <div class="max-w-2xl mx-auto px-6 text-center">
+                <p class="mb-5 reveal text-sm" style="color: var(--muted);">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir.</p>
+                <h2 class="font-display text-2xl md:text-3xl mb-3 reveal reveal-delay-1">Wassalamu'alaikum Warahmatullahi Wabarakatuh</h2>
+                <h3 class="font-display text-xl md:text-2xl mt-6 reveal reveal-delay-2" style="color: var(--accent);">Ahmad & Sarah</h3>
+                <div class="mt-10 heart-beat reveal reveal-delay-3"><svg class="w-9 h-9 mx-auto" style="color: var(--accent);" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
+            </div>
+        </section>
+
+        <footer class="py-8 text-center" style="background: var(--fg); color: rgba(255,255,255,0.8);">
+            <div class="max-w-md mx-auto px-6">
+                <p class="text-xs tracking-[0.12em] uppercase mb-2" style="color: var(--accent);">undangan by LP Tech</p>
+                <a href="https://wa.me/6287870805424" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-sm hover:text-white"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>+62 878-7080-5424</a>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Tautan ke file JS terpisah -->
+    <script src="script.js"></script>
+</body>
+</html>
